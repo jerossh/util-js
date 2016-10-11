@@ -1,6 +1,6 @@
 # util-js
 
-## common fucntion
+### common fucntion
 
 - isMobile()
 - getLocationOrigin()
