@@ -1,0 +1,27 @@
+{
+  "name": "kapu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE_ENV=production node app.js"
+  },
+  "author": "jerossh <jerosshen@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "moment": "^2.14.1",
+    "serve-favicon": "^2.3.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.14.0",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.1.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.4.0",
+    "gulp-stylus": "^2.6.0",
+    "morgan": "^1.7.0"
+  }
+}
