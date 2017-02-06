@@ -5,13 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="stylesheet" href="../../dist/jslide/jslide.css">
 </head>
 <body>
-
+  <div class="container">
+    <div class="row">
+      <div id="main-slide">
+        <div class="slideWrap">
+          <div class="slide">
+            <ul>
+              <li>
+                <img src="http://oet6jnn6p.bkt.clouddn.com/1-4.jpg" alt="">
+              </li>
+              <li>
+                <img src="http://oet6jnn6p.bkt.clouddn.com/2-2.jpg" alt="">
+              </li>
+              <li>
+                <img src="http://oet6jnn6p.bkt.clouddn.com/3-1.jpg" alt="">
+              </li>
+            </ul>
+          </div>
+          <div class="clearfix"></div>
+          <div class="btn"></div>
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script src="../../dist/jslide/jslide.js"></script>
 <script type="text/javascript">
-  var slide1 = new Jonslide('#main-slide')
+  $(document).ready(function(){
+    var slide1 = new Jonslide('#main-slide');
+  });
 </script>
 </html>
