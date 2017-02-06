@@ -6,12 +6,14 @@
     function Jonslide (ele, option) {
       var t = this;
       var defaultOption = {
-        showImgcout: 1,  // 已经显示的幻灯片数，默认是一个
+        showImgcout: 1,           // 已经显示的幻灯片数，默认是一个
         imgStart: 0,
-        direction: 'horizontal',  // or 'vertical'
-        autoplay: true,  // or 'false'
-        transition: 500,
-        timer: 3500,
+        direction: 'vertical',  // or 'vertical'
+        autoplay: true,           // or 'false'
+        circle: true,            // 按钮
+        transition: 500,          // 动画时长
+        timer: 3500,              // 事件间隔
+
       }
       option = option || {};
       for (var prop in defaultOption) {
@@ -25,12 +27,26 @@
       t.wrap = t.slideRoot.find('.slideWrap');  // 整个幻灯片的包裹层
       t.slide = t.wrap.find('.slide');  // 幻灯片图片的包裹层
       t.btn = t.slideRoot.find('.btn');
-      t.imgCount = t.wrap.find('li').length;  // 总数
+      t.li = t.wrap.find('li');
+      t.imgCount = t.li.length;  // 总数
       t.count = t.imgCount - option.showImgcout;  // 切换次数
-      t.distance = t.wrap.width();  // 切换的距离
-      this.i = option.imgStart;  // 初始化后的第一张幻灯片， 默认第一张
-      t.styleToDeal = defaultOption.direction === 'horizontal' ? 'margin-left' : 'margin-top';
-      t.wrap.find('li').width(t.distance);  // 设置幻灯片大小与最外层相同
+      t.i = option.imgStart;  // 初始化后的第一张幻灯片， 默认第一张
+
+      var wrapWidth = t.wrap.width();
+      t.li.width(wrapWidth);  // 设置幻灯片大小与最外层相同
+
+
+      if (option.direction === 'horizontal') {
+        t.slide.width(wrapWidth*t.imgCount)
+        t.distance = wrapWidth;
+        t.styleToDeal = 'margin-left';
+        t.li.css('display', 'inline-block');
+      } else {
+        t.distance = t.li.height();
+        t.wrap.height(t.distance);
+        t.styleToDeal = 'margin-top';
+      }
+
       this.init();
     }
 
@@ -39,8 +55,10 @@
       init: function() {
         this.slide.css('transition', 'all 0.5s');
         this.clickBtn();
-        this.circleAdd();
-        this.circleClick();
+        if (this.params.circle) {
+          this.circleAdd();
+          this.circleClick();
+        }
         if (this.params.autoplay) {
           this.autoplay();
         }
@@ -49,7 +67,7 @@
         var t = this;
         var styleToDeal = t.styleToDeal;
         if (t.i < t.count) {
-
+          console.log('下一页');
           var maginLeft = parseInt(t.slide.css(t.styleToDeal), 10);
           t.slide.css(styleToDeal, maginLeft-t.distance);
           t.i++;
@@ -72,17 +90,21 @@
         }
         t.circleChange();
       },
+      goInterval: function time() {  // setInterval 有缺陷
+        var t = this;
+        t.next();
+        t.timer = setTimeout(time.bind(t), t.params.timer)
+      },
       autoplay: function () {
         var t = this;
-        t.timer = setInterval(t.next.bind(t), t.params.timer);
+        t.goInterval();
+
         t.wrap.hover(function() { // 鼠标悬停事件
-          console.log('该停止了');
-          t.btn.fadeIn()
-          clearInterval(t.timer);
+          t.btn.fadeIn();
+          clearTimeout(t.timer);
         }, function() {
-          console.log('启动了');
           t.btn.fadeOut();
-          t.timer = setInterval(t.next.bind(t), t.params.timer);
+          t.goInterval();
         });
       },
       clickBtn: function (){
@@ -108,8 +130,12 @@
       },
       circleChange: function() {
         var t = this;
-        t.circle.removeClass('circle-active');
-        t.circle.eq(t.i).addClass('circle-active');
+        if (t.params.circle) {
+          t.circle.removeClass('circle-active');
+          t.circle.eq(t.i).addClass('circle-active');
+        } else {
+          return false;
+        }
       },
       circleClick: function() {
         var t = this;
@@ -119,7 +145,6 @@
           t.slide.css(t.styleToDeal, -t.distance * t.i);
           t.circleChange();
         })
-
       }
     }
 

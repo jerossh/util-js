@@ -6,7 +6,6 @@
   padding: 0;
 }
 .slide {
-  width: 99999px;
   font-size: 0;
 }
 .slide ul {
@@ -14,7 +13,6 @@
   padding: 0;
 }
 .slideWrap .slide ul li {
-  display:  inline-block;
   list-style: none;
 }
 .slideWrap .slide ul li img {
@@ -22,12 +20,11 @@
   width: 100%;
 }
 
-.btn-wrap {
-  /*position: absolute;
-  top: 0;
-  left: 0;*/
-}
+/*.btn-wrap {
+  display: none;
+}*/
 .btn-wrap .btn{
+  display: none;
   position: absolute;
   transform: translateY(-50%);
   top: 50%;
