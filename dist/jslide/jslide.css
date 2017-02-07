@@ -1,21 +1,19 @@
 .slideWrap {
   position: relative;
-  width: 100%;
   overflow: hidden;
   margin: 0;
   padding: 0;
 }
 .slide {
+  width: 99999px;
   font-size: 0;
-}
-.slide ul {
   margin: 0;
   padding: 0;
 }
-.slideWrap .slide ul li {
+.slideWrap .slide  li {
   list-style: none;
 }
-.slideWrap .slide ul li img {
+.slideWrap .slide  li img {
   vertical-align: top;
   width: 100%;
 }
