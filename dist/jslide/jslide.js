@@ -109,7 +109,7 @@
       },
       autoplay: function () {
         var t = this;
-        setTimeout(function() {
+        t.timer = setTimeout(function() {
           t.goInterval()
         }, t.params.timer)
 
