@@ -15,7 +15,75 @@ var util = {
     method.tid = setTimeout(function(){
       method.call(context);
     }, 200);
-  }
+  },
+
+  handleTouchEvent: function (event) {
+    // var root =  document.querySelector(ele);
+    var start = {} ,end = {},direction, x, y;
+    if (event.touches.length === 1) {
+      switch (event.type) {
+        case 'touchstart':
+          start.x = event.touches[0].clientX;
+          start.y = event.touches[0].clientY;
+          break;
+        case 'touchend':
+          end.x = event.changedTouches[0].clientX;
+          end.y = event.changedTouches[0].clientY;
+          break;
+        case 'touchmove':
+          event.preventDefault();
+          break;
+        default:
+      }
+    }
+    x = end.x - start.x;
+    y = end.y - start.y;
+    if (Math.abs(x) - Math.abs(y) >= 0) {  // 水平优先
+      direction = x > 0 ? 'right': 'left';
+    } else {
+      direction = y > 0 ? 'bottom' : 'top';
+    }
+    return direction
+  }  // handleTouchEvent
 }
 
 window.util = util;
+
+
+var start = {} ,end = {},direction, x, y;
+var handleTouchEvent = function (event) {
+  console.log(event.type);
+  if (event.touches.length === 1) {
+    switch (event.type) {
+      case 'touchstart':
+        event.preventDefault()
+        start.x = event.touches[0].clientX;
+        start.y = event.touches[0].clientY;
+        console.log('点击位置',start);
+        break;
+      case 'touchmove':
+        event.preventDefault();
+        break;
+      default:
+        console.log('nothing');
+    }
+  }
+}  // handleTouchEvent
+
+var handleTouchend = function () {
+  console.log('没有结束？');
+  end.x = event.changedTouches[0].clientX;
+  end.y = event.changedTouches[0].clientY;
+  x = end.x - start.x;
+  y = end.y - start.y;
+
+  if (Math.abs(x) - Math.abs(y) >= 0) {  // 水平优先
+    direction = x > 0 ? 'right': 'left';
+  } else {
+    direction = y > 0 ? 'bottom' : 'top';
+  }
+  return direction
+}
+document.addEventListener('touchstart', handleTouchEvent);
+document.addEventListener('touchend', handleTouchend);
+document.addEventListener('touchmove', handleTouchEvent);

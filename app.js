@@ -11,6 +11,7 @@ app.set('view engine', 'html');
 // 路由
 app.get('/', function(req, res) {
   res.send('启动成功！！')
+
 });
 app.get('/slide', function(req, res) {
   res.render('jslide')

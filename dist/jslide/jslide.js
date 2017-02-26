@@ -57,6 +57,9 @@
         if (this.params.autoplay) {
           this.autoplay();
         }
+        if (navigator.userAgent.indexOf('Mobile')) {
+          this.handleTouchEvent();
+        }
       },
       direction: function(val){
         var t = this;
@@ -167,6 +170,57 @@
           clearTimeout(t.timer);
           throtle(t.direction, t);
         })
+      },
+      handleTouchEvent: function () {
+        var t = this;
+        t.start = {};
+        t.end = {};
+        t.direction = '';
+        t.slideRoot[0].addEventListener('touchstart', t.handleTouchstartAndMove.bind(t));
+        t.slideRoot[0].addEventListener('touchmove', t.handleTouchstartAndMove.bind(t));
+        t.slideRoot[0].addEventListener('touchend', t.handleTouchend.bind(t));
+      },
+      handleTouchstartAndMove: function (event) {
+        var t = this;
+        console.log(event.type);
+        if (event.touches.length === 1) {
+          switch (event.type) {
+            case 'touchstart':
+              event.preventDefault()
+              t.start.x = event.touches[0].clientX;
+              t.start.y = event.touches[0].clientY;
+              // console.log('点击位置',t.start);
+              break;
+            case 'touchmove':
+              event.preventDefault();
+              break;
+            default:
+              // console.log('nothing');
+          }
+        }
+      },  // handleTouchstartAndMove
+      handleTouchend: function (event) {
+        console.log(event.type);
+        var t = this;
+        t.end.x = event.changedTouches[0].clientX;
+        t.end.y = event.changedTouches[0].clientY;
+        var x = t.end.x - t.start.x;
+        var y = t.end.y - t.start.y;
+
+        if (Math.abs(x) - Math.abs(y) >= 0) {  // 水平优先
+          t.direction = x > 0 ? 'right': 'left';
+        } else {
+          t.direction = y > 0 ? 'bottom' : 'top';
+          return false;
+        }
+        clearTimeout(t.timer);
+        if (t.direction === 'right') {
+          t.prev();
+        } else {
+          t.next();
+        }
+        setTimeout(t.autoplay(), 1000)
+
       }
     }
 
